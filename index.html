@@ -37,10 +37,15 @@ td,th{border:thin solid #999;padding:.3em .4em;text-align:left}
   blockquote{border-color:#333}
   td,th{border-color:#666}
 }
-input[type="checkbox"]{width: 1.5em;height: 1.5em;}
+input[type="checkbox"]{width:1.5em;height:1.5em}
+.vanillaBiome{font-style:italic}
+.modName{font-style:italic;line-height:1;font-size:small}
+[modded]{display:none}
 </style>
 </head>
-
+<div>
+  <button style="width:15em; height:4em" onclick="toggleModded()">Toggle Modded Visibility</button>
+</div>
 <div>
   <label for="minGroupSize">Min num of NPCs per group:</label>
   <input type="number" id="minGroupSize" min="1" max="25" value="1" onchange="updateNumPossibleGroups()">
@@ -55,13 +60,17 @@ input[type="checkbox"]{width: 1.5em;height: 1.5em;}
   <output id="numPossibleGroups"></output>
 </div>
 
-<div>
-  <div id="pylonTableDiv"></div>
+<div modded="true">
+  <div id="biomeTableDiv"></div>
+  <button style="width:15em; height:4em" onclick="setBiomesVanillaOnly()">Clear Modded</button>
 </div>
 
-<button style="width:15em; height:4em" onclick="includePylonBiomes()">Select pylon biomes</button>
-
-<br>
+<div>
+  <div id="pylonTableDiv"></div>
+  <button style="width:15em; height:4em" onclick="includePylonsVanilla()">Select all Vanilla pylons</button>
+</div>
+  
+<!-- <br>
 <label>Use naturally occuring hybrid biomes</label>
 <input type="checkbox" id="useBiomes2Natural">
 <br>
@@ -72,10 +81,13 @@ input[type="checkbox"]{width: 1.5em;height: 1.5em;}
 
 <label>Use the other feasible hybrid biomes</label>
 <input type="checkbox" id="useBiomes2Rest">
-<br>
+<br> -->
 
-<div style="overflow:scroll; height:15em">
+<div style="overflow:scroll; height:60em">
   <div id="npcTableDiv"></div>
+</div>
+<div>
+  <button style="width:15em; height:4em" onclick="setNPCsVanilla()">Select all Vanilla NPCs</button><button style="width:15em; height:4em" onclick="setNPCsModded()">Deselect all Vanilla NPCs</button>
 </div>
 
 

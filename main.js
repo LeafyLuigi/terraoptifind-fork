@@ -1,9 +1,25 @@
-const people = Object.keys(npcdict)
+const vanillaNPCs = Object.keys(npcdict)
+
+var showModdedSheet = "tr[modded]{display:table-row}div[modded]{display:block}"
+var moddedVisible = false
+function toggleModded() {
+  if (!moddedVisible){
+    var sheet = document.createElement("style")
+    sheet.setAttribute("id","showModdedStyleSheet")
+    sheet.innerText = showModdedSheet
+    document.head.appendChild(sheet)
+    moddedVisible = true
+  }
+  else {
+    document.getElementById("showModdedStyleSheet").remove()
+    moddedVisible = false
+  }
+}
 
 function updateNumPossibleGroups() {
   // count number of npcs we can use
   let n = 0
-  for (const person of people) {
+  for (const person of npcs) {
     if (document.getElementById(person + "Checkbox").checked) {
       n += 1
     }
@@ -36,31 +52,73 @@ function updateNumPossibleGroups() {
   document.getElementById("numPossibleGroups").value = numOfGroups
 }
 
+function genBiomeTable() {
+  let tableHTML = "<table>"
+  tableHTML += "<tr> <th>Biome</th> <th>Biome Exists?</th>"
+  for (const biome of biomes) {
+    tableHTML += "<tr"
+    // Adds mod id for selection via buttons and whatnot
+    if (Object.keys(biomes1Modded).includes(biome)) {
+      tableHTML += " fromMod=\"" + biomes1Modded[biome]["mod"] + "\""
+      if(biomes1Modded[biome]["note"]){tableHTML += " title=\""+ biomes1Modded[biome]["note"] +"\""}
+    } else {
+      tableHTML += " class=\"vanillaBiome\""
+    }
+    tableHTML += ">"
+    tableHTML += "<td>" + biome
+    // Check for modded, adds mod's name under biome
+    if (Object.keys(biomes1Modded).includes(biome)) {
+      tableHTML += "<br><span class=\"modName\">" + biomes1Modded[biome]["mod"] + "</span>"
+    }
+    tableHTML += "</td>"
+    // Adds "Does this exist?" checkbox
+    tableHTML += "<td style=\"text-align:center\"> <input style=\"width:1.5em; height:1.5em\""
+    tableHTML += "type=\"checkbox\" id=\"" + biome + "ExistsCheckbox\"> </td>"
+    tableHTML += "</tr>"
+  }
+  tableHTML += "</table>"
+  document.getElementById('biomeTableDiv').innerHTML = tableHTML
+  // Checks (and disables interaction with) all vanilla
+  for (const biome of biomes1) {
+    document.getElementById(biome + "ExistsCheckbox").checked = true
+    document.getElementById(biome + "ExistsCheckbox").disabled = true
+  }
+}
+
+function setBiomesVanillaOnly() {
+  for (const biome of Object.keys(biomes1Modded)) {
+    document.getElementById(biome + "ExistsCheckbox").checked = false
+  }
+}
+
 function genPylonTable() {
   let tableHTML = "<table>"
-  tableHTML += "<tr> <th>Biome</th> <th>Require pylon here?</th> <th>Pylon available?</th>"
-  for (const biome of baseBiomes) {
-    tableHTML += "<tr>"
-    tableHTML += "<td>" + biome + "</td>"
+  tableHTML += "<tr> <th>Biome</th> <th>Require pylon here?</th>"
+  for (const pylon of pylons) {
+    tableHTML += "<tr"
+    // Adds mod id for selection via buttons and whatnot
+    if (Object.keys(pylonBiomesModded).includes(pylon)) {
+      tableHTML += " modded=\"true\" fromMod=\"" + pylonBiomesModded[pylon]["mod"] + "\""
+    }
+    tableHTML += ">"
+    tableHTML += "<td>" + pylon
+    // Check for modded, add mod's name under pylon
+    if (Object.keys(pylonBiomesModded).includes(pylon)) {
+      tableHTML += "<br><span class=\"modName\">" + pylonBiomesModded[pylon]["mod"] + "</span>"
+    }
+    tableHTML += "</td>"
     // pylon required?
     tableHTML += "<td style=\"text-align:center\"> <input style=\"width:1.5em; height:1.5em\""
-    tableHTML += "type=\"checkbox\" id=\"" + biome + "Checkbox\"> </td>"
-    // biome available?
-    tableHTML += "<td style=\"text-align:center\"> <input style=\"width:1.5em; height:1.5em\""
-    tableHTML += "type=\"checkbox\" id=\"" + biome + "CheckboxExcluded\"> </td>"
+    tableHTML += "type=\"checkbox\" id=\"" + pylon + "Checkbox\"> </td>"
     tableHTML += "</tr>"
   }
   tableHTML += "</table>"
   document.getElementById('pylonTableDiv').innerHTML = tableHTML
-  for (const biome of baseBiomes) {
-    document.getElementById(biome + "Checkbox").checked = true
-  }
 }
 
-function includePylonBiomes() {
-  for (const biome of baseBiomes) {
-    document.getElementById(biome + "Checkbox").checked = true
-    document.getElementById(biome + "CheckboxExcluded").checked = false
+function includePylonsVanilla() {
+  for (const pylon of pylonBiomes) {
+    document.getElementById(pylon + "Checkbox").checked = true
   }
 }
 
@@ -69,13 +127,23 @@ function genNPCtable() {
   let tableHTML = "<table>"
   tableHTML += "<tr> <th>NPC name</th> <th>Include this NPC?</th>"
   tableHTML += "<th>Weighting for this NPC (higher = more important, should be >= 0)</th></tr>"
-  for (const person of people) {
-    tableHTML += "<tr>"
+  for (const person of npcs) {
+    tableHTML += "<tr"
+    // Adds mod id for selection via buttons and whatnot
+    if (Object.keys(npcdictModded).includes(person)) {
+      tableHTML += " modded=\"true\" fromMod=\"" + npcdictModded[person]["mod"] + "\""
+    }
+    tableHTML += ">"
     // name
-    tableHTML += "<td>" + person + "</td>"
+    tableHTML += "<td>" + person
+    // add mod name if applicable
+    if (Object.keys(npcdictModded).includes(person)) {
+      tableHTML += "<br><span class=\"modName\">" + npcdictModded[person]["mod"] + "</span>"
+    }
+    tableHTML += "</td>"
     // "should use?" checkbox
     tableHTML += "<td style=\"text-align:center\"> <input style=\"width:1.5em; height:1.5em\""
-    tableHTML += "type=\"checkbox\" id=\"" + person + "Checkbox\" onchange=\"updateNumPossibleGroups()\" checked> </td>"
+    tableHTML += "type=\"checkbox\" id=\"" + person + "Checkbox\" onchange=\"updateNumPossibleGroups()\"> </td>"
     // weighting
     tableHTML += "<td style=\"text-align:center\"> <input style=\"width:5em\" type=number "
     tableHTML += "id=\"" + person + "Weighting\" min=0 value=1.0> </td>" 
@@ -84,12 +152,24 @@ function genNPCtable() {
   }
   tableHTML += "</table>"
   output.innerHTML += tableHTML
+  setNPCsVanilla()
+}
+
+function setNPCsVanilla() {
+  for (const person of vanillaNPCs) {
+    document.getElementById(person + "Checkbox").checked = true
+  }
+}
+function setNPCsModded() {
+  for (const person of vanillaNPCs) {
+    document.getElementById(person + "Checkbox").checked = false
+  }
 }
 
 function genResultsTable(groups) {
   groups.sort((a,b) => {
-    let c = a[1].map(y => y.map(x => baseBiomes.indexOf(x)).toString()).join("")
-    let d = b[1].map(y => y.map(x => baseBiomes.indexOf(x)).toString()).join("")
+    let c = a[1].map(y => y.map(x => pylons.indexOf(x)).toString()).join("")
+    let d = b[1].map(y => y.map(x => pylons.indexOf(x)).toString()).join("")
       return c > d ? 1 : d > c ? -1 : 0
     })
   let output = document.getElementById("resultTableDiv");
@@ -189,7 +269,7 @@ function startSearch() {
   })
   
   let peopleWeCanUse = []
-  for (const person of people) {
+  for (const person of vanillaNPCs) {
     if (document.getElementById(person + "Checkbox").checked) {
       peopleWeCanUse.push(person)
       // don't allow non-positive values for the weighting
@@ -198,7 +278,7 @@ function startSearch() {
     }
   }
   let minBiomes = []
-  for (const biome of baseBiomes) {
+  for (const biome of pylons) {
     if (document.getElementById(biome + "Checkbox").checked) {
       minBiomes.push(biome)
     }
@@ -222,7 +302,7 @@ function startSearch() {
 }
 
 
-
+genBiomeTable()
 genPylonTable()
 genNPCtable()
 updateNumPossibleGroups()

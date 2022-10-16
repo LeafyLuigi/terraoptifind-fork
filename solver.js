@@ -158,7 +158,7 @@ class Searcher {
 
 
 onmessage = function(e) {
-  npcdict = e["data"][0][0]
+  npcs = e["data"][0][0]
   biomes = e["data"][0][1]
   const searcher = new Searcher(...e["data"][1])
   searcher.search()

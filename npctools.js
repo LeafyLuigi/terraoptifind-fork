@@ -41,10 +41,10 @@ function oneHappiness(name, biome, neighbours) {
 
   // neighbours
   for (const n of neighbours) {
-    if (npc["loves"].includes(n))    { happ *= 0.88 }
-    if (npc["likes"].includes(n) || n === "Princess")         { happ *= 0.94 }
-    if (npc["dislikes"].includes(n)) { happ *= 1.06 }
-    if (npc["hates"].includes(n))    { happ *= 1.12 }
+    if (npc["loves"].includes(n))                     { happ *= 0.88 }
+    if (npc["likes"].includes(n) || n === "Princess") { happ *= 0.94 }
+    if (npc["dislikes"].includes(n))                  { happ *= 1.06 }
+    if (npc["hates"].includes(n))                     { happ *= 1.12 }
   }
 
   // enforce upper/lower bound on happiness

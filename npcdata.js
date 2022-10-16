@@ -1,22 +1,51 @@
-const baseBiomes = ["Forest", "Hallow", "Caverns", "Desert", "Jungle", "Ocean", "Snow", "Mushroom", "Astral", "Sulphur", "Sunken"]
+const pylonBiomes = ["Forest", "Hallow", "Caverns", "Desert", "Jungle", "Ocean", "Snow", "Mushroom"]
+const pylonBiomesModded = {
+    "Astral": {"mod": "Calamity"},
+    "Sulphur": {"mod": "Calamity"},
+    "Sunken": {"mod": "Calamity"}
+}
+var pylons = pylonBiomes.concat(Object.keys(pylonBiomesModded))
 // Dungeon can be found using Fargo's Mutant with the Abomination as a disliked biome. This bime lacks a pylon in Fargo's Mutant.
 // Brimstone Crags is from Calamity and can be found with the Brimstone Witch as a disliked biome. A pylon exists for this biome but lacks any NPC requirements.
 // Sky can be seen using Fargo's Mutant with the Mutant, Deviantt or Abominationn with all three loving the biome. This biome lacks a pylon in Fargo's Mutant.
+// Sky only appears to affect those three above.
 const biomes1 = [
-    ["Forest"],
+    ["Forest"],             // Effectively a fallback biome
     ["Hallow"],
     ["Caverns"],
     ["Desert"],
     ["Jungle"],
     ["Ocean"],
     ["Snow"],
-    ["Mushroom"],
-    ["Sky"],
-    ["Dungeon"],
-    ["Brimstone Crags"],
-    ["Sulphur"],
-    ["Sunken"]
+    ["Mushroom"]
 ]
+const biomes1Modded = {
+    "Sky": {"mod": "Fargo's Mutant", "note":"Only applies if NPC has opinion of Sky biome"},
+    "Sulphur": {"mod": "Calamity"},
+    "Sunken": {"mod": "Calamity"},
+    "Astral": {"mod": "Calamity"}
+}
+var biomes = biomes1.concat(Object.keys(biomes1Modded))
+
+// Location-based biomes:
+    // Horizontal
+        // Ocean
+    // Vertical
+        // Caverns (inc underground, underworld)
+        // Sky (Not *exactly* modded but doesn't apply in Vanilla)
+
+// Tile-based biomes:
+    // Hallow
+    // Desert
+    // Snow
+    // Jungle
+    // Mushroom
+    
+    // Modded
+        // Astral
+        // Brimstone Crags (doesn't have to be in underworld but generates there)
+        // Sunken (can be artificial but generates underground)
+        // Sulphur (artificial can be made but location based IS forced however)
 
 const biomes2Natural = [
     ["Hallow", "Caverns"],
@@ -52,7 +81,6 @@ const biomes3Easy = [
     ["Hallow", "Desert", "Ocean"],
     ["Caverns", "Jungle", "Mushroom"]
 ]
-
 const biomes3Rest = [
     ["Hallow", "Caverns", "Jungle"],
     ["Hallow", "Desert", "Jungle"],
@@ -79,11 +107,8 @@ const biomes3Rest = [
     ["Ocean", "Snow", "Mushroom"]
 ]
 
-const enabledMods = ["Vanilla"]
-
 var npcdict = {
     "Guide": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Forest"
@@ -106,7 +131,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Merchant": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Forest"
@@ -129,7 +153,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Zoologist": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Forest"
@@ -153,7 +176,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Golfer": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Forest"
@@ -178,7 +200,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Nurse": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Hallow"
@@ -203,7 +224,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Tavernkeep": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Hallow"
@@ -227,7 +247,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Party Girl": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Hallow"
@@ -252,7 +271,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Wizard": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Hallow"
@@ -276,7 +294,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Demolitionist": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Caverns"
@@ -299,7 +316,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Goblin Tinkerer": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Caverns"
@@ -323,7 +339,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Clothier": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Caverns"
@@ -347,7 +362,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Dye Trader": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Desert"
@@ -370,7 +384,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Arms Dealer": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Desert"
@@ -394,7 +407,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Steampunker": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Desert"
@@ -418,7 +430,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Dryad": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Jungle"
@@ -441,7 +452,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Painter": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Jungle"
@@ -464,7 +474,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Witch Doctor": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Jungle"
@@ -487,7 +496,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Stylist": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Ocean"
@@ -511,7 +519,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Angler": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Ocean"
@@ -533,7 +540,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Pirate": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Ocean"
@@ -557,7 +563,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Mechanic": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Snow"
@@ -581,7 +586,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Tax Collector": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Snow"
@@ -606,7 +610,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Cyborg": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [
             "Snow"
@@ -630,7 +633,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Santa Claus": {
-        "mod": "Vanilla",
         "biomes_loved": [
             "Snow"
         ],
@@ -648,7 +650,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Truffle": {
-        "mod": "Vanilla",
         "biomes_forced": [
             "Mushroom"
         ],
@@ -676,7 +677,6 @@ var npcdict = {
         "weighting": 1.0
     },
     "Princess": {
-        "mod": "Vanilla",
         "biomes_loved": [],
         "biomes_liked": [],
         "biomes_disliked": [],
@@ -687,9 +687,10 @@ var npcdict = {
         "hates": [],
         "weighting": 1.0
     },
+}
 
-    // Modded NPCs start here
-
+// Modded NPCs start here
+var npcdictModded = {
     // Magic Storage
     "Automation": {
         "mod": "Magic Storage",
@@ -839,6 +840,7 @@ var npcdict = {
         ],
         "weighting": 1.0
     },
+    // Abomination dislikes the Dungeon but since that biome sorta acts similar to the evils, it's been excluded.
     "Abominationn": {
         "mod": "Fargo's Mutant",
         "biomes_loved": [
@@ -847,9 +849,7 @@ var npcdict = {
         "biomes_liked": [
             "Ocean"
         ],
-        "biomes_disliked": [
-            "Dungeon"
-        ],
+        "biomes_disliked": [],
         "biomes_hated": [],
         "loves": [
             "Mutant"
@@ -1152,15 +1152,14 @@ var npcdict = {
     },
 
     // Calamity
+    // Brimstone Witch dislikes the Brimstone Crags but due to the Pylon not requiring any NPCs nearby, it's been excluded from calculations
     "Brimstone Witch": {
         "mod": "Calamity",
         "biomes_loved": [],
         "biomes_liked": [
             "Forest"
         ],
-        "biomes_disliked": [
-            "Brimstone Crags"
-        ],
+        "biomes_disliked": [],
         "biomes_hated": [],
         "loves": [],
         "likes": [
@@ -1267,3 +1266,5 @@ var npcdict = {
         "weighting": 1.0
     },
 }
+
+var npcs = Object.keys(npcdict).concat(Object.keys(npcdictModded))
