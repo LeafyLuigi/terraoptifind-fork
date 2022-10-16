@@ -286,18 +286,18 @@ function startSearch() {
   let minGroupSize = document.getElementById("minGroupSize").value
   let maxGroupSize = document.getElementById("maxGroupSize").value
 
-  let biomes = biomes1
-  if (document.getElementById("useBiomes2Natural").checked) {
-    biomes = biomes.concat(biomes2Natural)
-  }
-  if (document.getElementById("useBiomes2Easy").checked) {
-    biomes = biomes.concat(biomes2Easy, biomes3Easy)
-  }
-  if (document.getElementById("useBiomes2Rest").checked) {
-    biomes = biomes.concat(biomes2Rest, biomes3Rest)
-  }
+  // let biomes = biomes1
+  // if (document.getElementById("useBiomes2Natural").checked) {
+  //   biomes = biomes.concat(biomes2Natural)
+  // }
+  // if (document.getElementById("useBiomes2Easy").checked) {
+  //   biomes = biomes.concat(biomes2Easy, biomes3Easy)
+  // }
+  // if (document.getElementById("useBiomes2Rest").checked) {
+  //   biomes = biomes.concat(biomes2Rest, biomes3Rest)
+  // }
 
-  myWorker.postMessage([[npcdict,biomes],[peopleWeCanUse, minGroupSize, maxGroupSize, minBiomes]])
+  myWorker.postMessage([[npcs,biomes],[peopleWeCanUse, minGroupSize, maxGroupSize, minBiomes]])
   myWorker.onmessage = function(e){handleWorkerMessage(...e["data"])}
 }
 
