@@ -36,23 +36,31 @@ function updateNumPossibleGroups() {
   document.getElementById("numPossibleGroups").value = numOfGroups
 }
 
-function genBiomeTable() {
+function genPylonTable() {
   let tableHTML = "<table>"
-  tableHTML += "<tr> <th>Biome</th> <th>Require pylon here?</th>"
+  tableHTML += "<tr> <th>Biome</th> <th>Require pylon here?</th> <th>Pylon available?</th>"
   for (const biome of baseBiomes) {
     tableHTML += "<tr>"
     tableHTML += "<td>" + biome + "</td>"
+    // pylon required?
     tableHTML += "<td style=\"text-align:center\"> <input style=\"width:1.5em; height:1.5em\""
     tableHTML += "type=\"checkbox\" id=\"" + biome + "Checkbox\"> </td>"
+    // biome available?
+    tableHTML += "<td style=\"text-align:center\"> <input style=\"width:1.5em; height:1.5em\""
+    tableHTML += "type=\"checkbox\" id=\"" + biome + "CheckboxExcluded\"> </td>"
     tableHTML += "</tr>"
   }
   tableHTML += "</table>"
-  document.getElementById('biomeTableDiv').innerHTML = tableHTML
+  document.getElementById('pylonTableDiv').innerHTML = tableHTML
+  for (const biome of baseBiomes) {
+    document.getElementById(biome + "Checkbox").checked = true
+  }
 }
 
 function includePylonBiomes() {
   for (const biome of baseBiomes) {
     document.getElementById(biome + "Checkbox").checked = true
+    document.getElementById(biome + "CheckboxExcluded").checked = false
   }
 }
 
@@ -215,7 +223,7 @@ function startSearch() {
 
 
 
-genBiomeTable()
+genPylonTable()
 genNPCtable()
 updateNumPossibleGroups()
 
