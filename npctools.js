@@ -60,7 +60,7 @@ function oneHappiness(name, biome, neighbours) {
 function sumOfWeights(group) {
   let totalWeight = 0
   for (const person of group) {
-    totalWeight += npcdict[person]["weighting"]
+    totalWeight += npcsList[person]["weighting"]
   }
   return totalWeight
 }
