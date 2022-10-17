@@ -297,7 +297,7 @@ function startSearch() {
   //   biomes = biomes.concat(biomes2Rest, biomes3Rest)
   // }
 
-  myWorker.postMessage([[npcs,biomes],[peopleWeCanUse, minGroupSize, maxGroupSize, minBiomes]])
+  myWorker.postMessage([[npcs,biomesTotal],[peopleWeCanUse, minGroupSize, maxGroupSize, minBiomes]])
   myWorker.onmessage = function(e){handleWorkerMessage(...e["data"])}
 }
 

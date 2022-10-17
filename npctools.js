@@ -70,7 +70,7 @@ function sumOfWeights(group) {
 function bestBiomesForGroup(group) {
   let lowestHappinessSoFar = Infinity
   let bestBiomesSoFar = []
-  for (const biome of biomes) {
+  for (const biome of biomesTotal) {
     if (group.includes("Truffle") && (!biome.includes("Mushroom") || biome.includes("Caverns"))) { continue }
     let thisBiomeHappiness = 0.0
     for (const person of group) {

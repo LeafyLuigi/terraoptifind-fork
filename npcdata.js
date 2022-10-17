@@ -27,7 +27,7 @@ const biomes1Modded = {
     "Sunken": {"mod": "Calamity"},
     "Astral": {"mod": "Calamity"}
 }
-var biomes = biomes1.concat(Object.keys(biomes1Modded))
+var biomesTotal = biomes1.concat(Object.keys(biomes1Modded))
 
 // Location-based biomes:
     // Horizontal
