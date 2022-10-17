@@ -72,8 +72,8 @@ class Searcher {
     }
     this.#bestCombinationsSoFar.push(newCombination)
     this.#bestHappinessSoFar = newHappiness
-    
-    
+
+
   }
 
   biomeCoverExists(biomeGroupsToUse, biomesToCover) {
@@ -92,7 +92,7 @@ class Searcher {
     covers[key] = coverFound
     return coverFound
   }
-  
+
   findCombination(minIndex, prefixPeople, prefixHappiness, remainingPeople, remainingPeopleCount) {
     if (remainingPeopleCount === 0) {
       if (this.minBiomes.length == 0) {
@@ -158,7 +158,7 @@ class Searcher {
 
 
 onmessage = function(e) {
-  npcs = e["data"][0][0]
+  npcdict = e["data"][0][0]
   biomes = e["data"][0][1]
   const searcher = new Searcher(...e["data"][1])
   searcher.search()

@@ -1,3 +1,5 @@
+var supportedMods = ["Vanilla", "Calamity", "Fargo's Mutant", "Magic Storage", "Gensokyo", "Calamity's Vanities", "Anime Vanity & Pets", "Bags", "AlchemistNPC"]
+
 const pylonBiomes = ["Forest", "Hallow", "Caverns", "Desert", "Jungle", "Ocean", "Snow", "Mushroom"]
 const pylonBiomesModded = {
     "Astral": {"mod": "Calamity"},
@@ -981,9 +983,9 @@ var npcdictModded = {
         "weighting": 1.0
     },
 
-    // AlchemistNPC Lite
+    // AlchemistNPC
     "Young Brewer": {
-        "mod": "AlchemistNPC Lite",
+        "mod": "AlchemistNPC",
         "biomes_loved": [
             "Forest"
         ],
@@ -1007,7 +1009,7 @@ var npcdictModded = {
         "weighting": 1.0
     },
     "Tinkerer": {
-        "mod": "AlchemistNPC Lite",
+        "mod": "AlchemistNPC",
         "biomes_loved": [
             "Snow"
         ],
@@ -1031,7 +1033,7 @@ var npcdictModded = {
         "weighting": 1.0
     },
     "Operator": {
-        "mod": "AlchemistNPC Lite",
+        "mod": "AlchemistNPC",
         "biomes_loved": [
             "Snow"
         ],
@@ -1055,7 +1057,7 @@ var npcdictModded = {
         "weighting": 1.0
     },
     "Musician": {
-        "mod": "AlchemistNPC Lite",
+        "mod": "AlchemistNPC",
         "biomes_loved": [
             "Hallow"
         ],
@@ -1079,7 +1081,7 @@ var npcdictModded = {
         "weighting": 1.0
     },
     "Jeweler": {
-        "mod": "AlchemistNPC Lite",
+        "mod": "AlchemistNPC",
         "biomes_loved": [
             "Forest"
         ],
@@ -1103,7 +1105,7 @@ var npcdictModded = {
         "weighting": 1.0
     },
     "Brewer": {
-        "mod": "AlchemistNPC Lite",
+        "mod": "AlchemistNPC",
         "biomes_loved": [
             "Forest"
         ],
@@ -1127,7 +1129,7 @@ var npcdictModded = {
         "weighting": 1.0
     },
     "Architect": {
-        "mod": "AlchemistNPC Lite",
+        "mod": "AlchemistNPC",
         "biomes_loved": [
             "Jungle"
         ],
@@ -1150,6 +1152,55 @@ var npcdictModded = {
         "hates": [],
         "weighting": 1.0
     },
+    "Alchemist": {
+        "mod": "AlchemistNPC",
+        "biomes_loved": [
+            "Caverns"
+        ],
+        "biomes_liked": [
+            "Forest"
+        ],
+        "biomes_disliked": [
+            "Snow"
+        ],
+        "biomes_hated": [],
+        "loves": [
+            "Young Brewer"
+        ],
+        "likes": [
+            "Mechanic"
+        ],
+        "dislikes": [
+            "Brewer"
+        ],
+        "hates": [],
+        "weighting": 1.0
+    },
+    // Not in Lite, disabled for time being
+    // "Explorer": {
+    //     "mod": "AlchemistNPC",
+    //     "biomes_loved": [
+    //         "Jungle"
+    //     ],
+    //     "biomes_liked": [
+    //         "Ocean"
+    //     ],
+    //     "biomes_disliked": [
+    //         "Snow"
+    //     ],
+    //     "biomes_hated": [],
+    //     "loves": [
+    //         "Painter"
+    //     ],
+    //     "likes": [
+    //         "Goblin Tinkerer"
+    //     ],
+    //     "dislikes": [
+    //         "Tax Collector"
+    //     ],
+    //     "hates": [],
+    //     "weighting": 1.0
+    // },
 
     // Calamity
     // Brimstone Witch dislikes the Brimstone Crags but due to the Pylon not requiring any NPCs nearby, it's been excluded from calculations
