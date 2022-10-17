@@ -55,7 +55,7 @@ function updateNumPossibleGroups() {
 function genBiomeTable() {
   let tableHTML = "<table>"
   tableHTML += "<tr> <th>Biome</th> <th>Biome Exists?</th>"
-  for (const biome of biomes) {
+  for (const biome of biomesTotal) {
     tableHTML += "<tr"
     // Adds mod id for selection via buttons and whatnot
     if (Object.keys(biomes1Modded).includes(biome)) {
@@ -286,18 +286,18 @@ function startSearch() {
   let minGroupSize = document.getElementById("minGroupSize").value
   let maxGroupSize = document.getElementById("maxGroupSize").value
 
-  // let biomes = biomes1
-  // if (document.getElementById("useBiomes2Natural").checked) {
-  //   biomes = biomes.concat(biomes2Natural)
-  // }
-  // if (document.getElementById("useBiomes2Easy").checked) {
-  //   biomes = biomes.concat(biomes2Easy, biomes3Easy)
-  // }
-  // if (document.getElementById("useBiomes2Rest").checked) {
-  //   biomes = biomes.concat(biomes2Rest, biomes3Rest)
-  // }
+  let biomesToSearch = biomesTotal
+  if (document.getElementById("useBiomes2Natural").checked) {
+    biomesToSearch = biomesToSearch.concat(biomes2Natural)
+  }
+  if (document.getElementById("useBiomes2Easy").checked) {
+    biomesToSearch = biomesToSearch.concat(biomes2Easy, biomes3Easy)
+  }
+  if (document.getElementById("useBiomes2Rest").checked) {
+    biomesToSearch = biomesToSearch.concat(biomes2Rest, biomes3Rest)
+  }
 
-  myWorker.postMessage([[npcs,biomesTotal],[peopleWeCanUse, minGroupSize, maxGroupSize, minBiomes]])
+  myWorker.postMessage([[npcs,biomesToSearch],[peopleWeCanUse, minGroupSize, maxGroupSize, minBiomes]])
   myWorker.onmessage = function(e){handleWorkerMessage(...e["data"])}
 }
 
