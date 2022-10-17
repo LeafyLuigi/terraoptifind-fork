@@ -2,7 +2,7 @@
 // return happiness of the one npc (pricing modifier) multiplied by the npc's weight
 function oneHappiness(name, biome, neighbours) {
   let happ = 1.0
-  let npc = npcdict[name]
+  let npc = npcs[name]
   
   
   if (name === "Princess") {
