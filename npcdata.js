@@ -1319,3 +1319,4 @@ var npcdictModded = {
 }
 
 var npcs = Object.keys(npcdict).concat(Object.keys(npcdictModded))
+var npcsList = {npcdict, npcdictModded}
