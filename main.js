@@ -1,5 +1,3 @@
-const vanillaNPCs = Object.keys(npcdict)
-
 var showModdedSheet = "tr[modded]{display:table-row}div[modded]{display:block}"
 var moddedVisible = false
 function toggleModded() {
@@ -156,12 +154,12 @@ function genNPCtable() {
 }
 
 function setNPCsVanilla() {
-  for (const person of vanillaNPCs) {
+  for (const person of Object.keys(npcdict)) {
     document.getElementById(person + "Checkbox").checked = true
   }
 }
 function setNPCsModded() {
-  for (const person of vanillaNPCs) {
+  for (const person of Object.keys(npcdict)) {
     document.getElementById(person + "Checkbox").checked = false
   }
 }
@@ -269,7 +267,7 @@ function startSearch() {
   })
   
   let peopleWeCanUse = []
-  for (const person of vanillaNPCs) {
+  for (const person of npcs) {
     if (document.getElementById(person + "Checkbox").checked) {
       peopleWeCanUse.push(person)
       // don't allow non-positive values for the weighting
